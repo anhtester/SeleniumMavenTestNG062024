@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite Run By Package" verbose="1">
+    <test name="First Test">
+        <packages>
+            <!--<package name="com.anhtester.package_demo.package1"/>-->
+            <!--<package name="com.anhtester.package_demo.package2"/>-->
+
+            <!-- Include/Exclude package -->
+            <package name="com.anhtester.package_demo.*">
+                <include name="com.anhtester.package_demo.package1"/>
+            </package>
+        </packages>
+    </test>
+</suite>
