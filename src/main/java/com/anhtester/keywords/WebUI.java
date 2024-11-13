@@ -15,6 +15,11 @@ public class WebUI {
         this.driver = driver;
     }
 
+    public static void openWebsite(String url) {
+        System.out.println("Open website: " + url);
+        driver.get(url);
+    }
+
     public static void clickElement(By by) {
         System.out.println("Click on element " + by);
 //        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
