@@ -1,7 +1,7 @@
-package com.anhtester.Bai17_PageObjectModel.testcases;
+package com.anhtester.Bai19_PageNavigation.testcases;
 
-import com.anhtester.Bai17_PageObjectModel.pages.DashboardPage;
-import com.anhtester.Bai17_PageObjectModel.pages.LoginPage;
+import com.anhtester.Bai19_PageNavigation.pages.DashboardPage;
+import com.anhtester.Bai19_PageNavigation.pages.LoginPage;
 import com.anhtester.common.BaseTest;
 import org.testng.annotations.Test;
 
@@ -13,9 +13,12 @@ public class DashboardTest extends BaseTest {
     @Test(priority = 1)
     public void testCheckDashboardTotal(){
         loginPage = new LoginPage(driver);
-        loginPage.loginCRM();
-//===================================================================
-        dashboardPage = new DashboardPage(driver);
+
+        //loginPage.loginCRM();
+
+        //dashboardPage = new DashboardPage(driver);
+
+        dashboardPage = loginPage.loginCRM();
         dashboardPage.verifyInvoicesAwaitingPaymentTotal("0 / 2");
     }
 

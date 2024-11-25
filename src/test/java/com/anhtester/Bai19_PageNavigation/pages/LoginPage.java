@@ -1,9 +1,8 @@
-package com.anhtester.Bai17_PageObjectModel.pages;
+package com.anhtester.Bai19_PageNavigation.pages;
 
 import com.anhtester.keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.ArrayList;
@@ -96,21 +95,20 @@ public class LoginPage {
 
     }
 
-    //Các hàm xử lý cho chính trang này
     public void loginCRM(String email, String password) {
         WebUI.openWebsite("https://crm.anhtester.com/admin/authentication");
         WebUI.setText(inputEmail, email);
         WebUI.setText(inputPassword, password);
         WebUI.clickElement(buttonLogin);
-        verifyLoginSuccess();
     }
 
-    public void loginCRM() {
+    public DashboardPage loginCRM() {
         WebUI.openWebsite("https://crm.anhtester.com/admin/authentication");
         WebUI.setText(inputEmail, "admin@example.com");
         WebUI.setText(inputPassword, "123456");
         WebUI.clickElement(buttonLogin);
         verifyLoginSuccess();
+        return new DashboardPage(driver);
     }
 
 }
