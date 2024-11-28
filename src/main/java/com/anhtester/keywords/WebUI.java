@@ -16,6 +16,14 @@ public class WebUI {
         this.driver = driver;
     }
 
+    public static void sleep(double second) {
+        try {
+            Thread.sleep((long) (1000 * second));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void openWebsite(String url) {
         System.out.println("Open website: " + url);
         driver.get(url);
