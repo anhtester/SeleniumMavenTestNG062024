@@ -1,7 +1,7 @@
-package com.anhtester.Bai20_Practise_POM_CRM.testcases;
+package com.anhtester.Bai20_21_Practise_POM_CRM.testcases;
 
-import com.anhtester.Bai20_Practise_POM_CRM.pages.DashboardPage;
-import com.anhtester.Bai20_Practise_POM_CRM.pages.LoginPage;
+import com.anhtester.Bai20_21_Practise_POM_CRM.pages.DashboardPage;
+import com.anhtester.Bai20_21_Practise_POM_CRM.pages.LoginPage;
 import com.anhtester.common.BaseTest;
 import org.testng.annotations.Test;
 

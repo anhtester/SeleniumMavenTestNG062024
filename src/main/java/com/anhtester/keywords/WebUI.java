@@ -31,8 +31,6 @@ public class WebUI {
 
     public static void clickElement(By by) {
         System.out.println("Click on element " + by);
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//        wait.until(ExpectedConditions.elementToBeClickable(by));
         waitForElementToBeClickable(by);
         driver.findElement(by).click();
     }
@@ -41,7 +39,6 @@ public class WebUI {
         System.out.println("Set text " + text + " on element " + by);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(by)));
         driver.findElement(by).sendKeys(text);
     }
 

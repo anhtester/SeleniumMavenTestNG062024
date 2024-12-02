@@ -1,4 +1,4 @@
-package com.anhtester.Bai20_Practise_POM_CRM.pages;
+package com.anhtester.Bai20_21_Practise_POM_CRM.pages;
 
 import com.anhtester.keywords.WebUI;
 import org.openqa.selenium.By;
