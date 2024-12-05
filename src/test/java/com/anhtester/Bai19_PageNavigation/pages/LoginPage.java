@@ -66,8 +66,8 @@ public class LoginPage {
 //        String actualMessage1 = driver.findElement(errorMessage1).getText();
 //        String actualMessage2 = driver.findElement(errorMessage1).getText();
 
-        Assert.assertEquals(WebUI.getTextElement(errorMessage1), "The Password field is required.", "Content of error massage 1 NOT match.");
-        Assert.assertEquals(WebUI.getTextElement(errorMessage2), "The Email Address field is required.", "Content of error massage 2 NOT match.");
+        Assert.assertEquals(WebUI.getElementText(errorMessage1), "The Password field is required.", "Content of error massage 1 NOT match.");
+        Assert.assertEquals(WebUI.getElementText(errorMessage2), "The Email Address field is required.", "Content of error massage 2 NOT match.");
 
     }
 
@@ -85,7 +85,7 @@ public class LoginPage {
             Assert.assertTrue(driver.findElement(By.xpath("(//div[contains(@class, 'alert-danger')])[" + i + "]")).isDisplayed(), "Error message " + i + " NOT displays");
 
             for (int j = 0; j < messageString.size(); j++) {
-                if (WebUI.getTextElement(By.xpath("(//div[contains(@class, 'alert-danger')])[" + i + "]")).equals(messageString.get(j))) {
+                if (WebUI.getElementText(By.xpath("(//div[contains(@class, 'alert-danger')])[" + i + "]")).equals(messageString.get(j))) {
                     check = true;
                     break;
                 }
@@ -96,14 +96,14 @@ public class LoginPage {
     }
 
     public void loginCRM(String email, String password) {
-        WebUI.openWebsite("https://crm.anhtester.com/admin/authentication");
+        WebUI.openURL("https://crm.anhtester.com/admin/authentication");
         WebUI.setText(inputEmail, email);
         WebUI.setText(inputPassword, password);
         WebUI.clickElement(buttonLogin);
     }
 
     public DashboardPage loginCRM() {
-        WebUI.openWebsite("https://crm.anhtester.com/admin/authentication");
+        WebUI.openURL("https://crm.anhtester.com/admin/authentication");
         WebUI.setText(inputEmail, "admin@example.com");
         WebUI.setText(inputPassword, "123456");
         WebUI.clickElement(buttonLogin);

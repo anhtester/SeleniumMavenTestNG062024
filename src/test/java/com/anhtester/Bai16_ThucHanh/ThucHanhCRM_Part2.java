@@ -36,7 +36,7 @@ public class ThucHanhCRM_Part2 extends BaseTest {
         WebUI.clickElement(By.xpath(LocatorsCRM.menuCustomers));
 //        driver.findElement(By.xpath(LocatorsCRM.menuCustomers)).click();
 
-        System.out.println(WebUI.getTextElement(By.xpath(LocatorsCRM.headerCustomerPage)));
+        System.out.println(WebUI.getElementText(By.xpath(LocatorsCRM.headerCustomerPage)));
 //        System.out.println(driver.findElement(By.xpath(LocatorsCRM.headerCustomerPage)).getText());
 
         WebUI.clickElement(By.xpath(LocatorsCRM.buttonAddNewCustomer));
@@ -76,7 +76,7 @@ public class ThucHanhCRM_Part2 extends BaseTest {
         WebUI.setText(By.xpath(LocatorsCRM.inputSearchCustomer), CUSTOMER_NAME);
         Thread.sleep(2000);
         WebUI.waitForElementVisible(By.xpath(LocatorsCRM.itemCustomerFirst));
-        Assert.assertEquals(WebUI.getTextElement(By.xpath(LocatorsCRM.itemCustomerFirst)), CUSTOMER_NAME);
+        Assert.assertEquals(WebUI.getElementText(By.xpath(LocatorsCRM.itemCustomerFirst)), CUSTOMER_NAME);
         WebUI.clickElement(By.xpath(LocatorsCRM.itemCustomerFirst));
 
         //Verify data in customer detail
