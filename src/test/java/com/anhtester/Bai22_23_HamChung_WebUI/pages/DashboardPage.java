@@ -20,7 +20,7 @@ public class DashboardPage extends BasePage {
 
     public void verifyInvoicesAwaitingPaymentTotal(String total) {
         Assert.assertTrue(WebUI.isElementDisplayed(totalInvoicesAwaitingPayment), "The Invoices Awaiting Payment total label not display.");
-        Assert.assertEquals(WebUI.getElementText(totalInvoicesAwaitingPayment), total, "The Invoices Awaiting Payment total not match.");
+        WebUI.assertEquals(WebUI.getElementText(totalInvoicesAwaitingPayment), total, "The Invoices Awaiting Payment total not match.");
     }
 
 }

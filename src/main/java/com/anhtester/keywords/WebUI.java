@@ -1,11 +1,14 @@
 package com.anhtester.keywords;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.List;
 
@@ -13,8 +16,8 @@ public class WebUI {
 
     private static WebDriver driver;
 
-    private static int TIMEOUT = 10;
-    private static double STEP_TIME = 1;
+    private static int TIMEOUT = 5;
+    private static double STEP_TIME = 0;
     private static int PAGE_LOAD_TIMEOUT = 30;
 
     public WebUI(WebDriver driver) {
@@ -89,7 +92,7 @@ public class WebUI {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         //Wait for Javascript to load
-        ExpectedCondition< Boolean > jsLoad = new ExpectedCondition < Boolean > () {
+        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
                 return js.executeScript("return document.readyState").toString().equals("complete");
@@ -114,7 +117,7 @@ public class WebUI {
 
     public static void sleep(double second) {
         try {
-            Thread.sleep((long)(1000 * second));
+            Thread.sleep((long) (1000 * second));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -183,7 +186,7 @@ public class WebUI {
     public static void openURL(String url) {
         driver.get(url);
         sleep(STEP_TIME);
-        logConsole("Open URL:  " + url);
+        logConsole("\uD83C\uDF10 Open URL: " + url);
     }
 
     public static void clickElement(By by) {
@@ -236,6 +239,216 @@ public class WebUI {
         String value = getWebElement(by).getCssValue(cssPropertyName);
         System.out.println("==> CSS value: " + value);
         return value;
+    }
+
+    public static void setTextAndKey(By by, String value, Keys key) {
+        waitForPageLoaded();
+        getWebElement(by).sendKeys(value, key);
+        System.out.println("Set text: " + value + " on element " + by);
+    }
+
+    public static void scrollToElement(By by) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+    }
+
+    public static void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", element);
+    }
+
+    public static void scrollToElementAtTop(By by) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", getWebElement(by));
+    }
+
+    public static void scrollToElementAtBottom(By by) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+    }
+
+    public static void scrollToElementAtTop(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    public static void scrollToElementAtBottom(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(false);", element);
+    }
+
+    public static void scrollToPosition(int X, int Y) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(" + X + "," + Y + ");");
+    }
+
+    public static boolean moveToElement(By by) {
+        try {
+            Actions action = new Actions(driver);
+            action.moveToElement(getWebElement(by)).release(getWebElement(by)).build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean moveToOffset(int X, int Y) {
+        try {
+            Actions action = new Actions(driver);
+            action.moveByOffset(X, Y).build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean hoverElement(By by) {
+        try {
+            Actions action = new Actions(driver);
+            action.moveToElement(getWebElement(by)).perform();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean mouseHover(By by) {
+        try {
+            Actions action = new Actions(driver);
+            action.moveToElement(getWebElement(by)).perform();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean dragAndDrop(By fromElement, By toElement) {
+        try {
+            Actions action = new Actions(driver);
+            action.dragAndDrop(getWebElement(fromElement), getWebElement(toElement)).perform();
+            //action.clickAndHold(getWebElement(fromElement)).moveToElement(getWebElement(toElement)).release(getWebElement(toElement)).build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean dragAndDropElement(By fromElement, By toElement) {
+        try {
+            Actions action = new Actions(driver);
+            action.clickAndHold(getWebElement(fromElement)).moveToElement(getWebElement(toElement)).release(getWebElement(toElement)).build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean dragAndDropOffset(By fromElement, int X, int Y) {
+        try {
+            Actions action = new Actions(driver);
+            //Tính từ vị trí click chuột đầu tiên (clickAndHold)
+            action.clickAndHold(getWebElement(fromElement)).pause(1).moveByOffset(X, Y).release().build().perform();
+            return true;
+        } catch (Exception e) {
+            logConsole(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean pressENTER() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean pressESC() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_ESCAPE);
+            robot.keyRelease(KeyEvent.VK_ESCAPE);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static boolean pressF11() {
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_F11);
+            robot.keyRelease(KeyEvent.VK_F11);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param by truyền vào đối tượng element dạng By
+     * @return Tô màu viền đỏ cho Element trên website
+     */
+    public static WebElement highLightElement(By by) {
+        // Tô màu border ngoài chính element chỉ định - màu đỏ (có thể đổi màu khác)
+        if (driver instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='3px solid red'", getWebElement(by));
+            sleep(1);
+        }
+        return getWebElement(by);
+    }
+
+    public static boolean verifyEquals(Object actual, Object expected) {
+        waitForPageLoaded();
+        System.out.println("Verify equals: " + actual + " \uD83D\uDFF0 " + expected);
+        boolean check = actual.equals(expected);
+        return check;
+    }
+
+    public static void assertEquals(Object actual, Object expected, String message) {
+        waitForPageLoaded();
+        System.out.println("Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
+        Assert.assertEquals(actual, expected, message);
+    }
+
+    public static boolean verifyContains(String actual, String expected) {
+        waitForPageLoaded();
+        System.out.println("Verify contains: " + actual + " ↔\uFE0F " + expected);
+        boolean check = actual.contains(expected);
+        return check;
+    }
+
+    public static void assertContains(String actual, String expected, String message) {
+        waitForPageLoaded();
+        System.out.println("Assert contains: " + actual + " ↔\uFE0F " + expected);
+        boolean check = actual.contains(expected);
+        Assert.assertTrue(check, message);
+    }
+
+    public static void assertNotContains(String actual, String expected, String message) {
+        waitForPageLoaded();
+        System.out.println("Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
+        boolean check = actual.contains(expected);
+        Assert.assertFalse(check, message);
+    }
+
+    public static String getCurrentUrl(){
+        return driver.getCurrentUrl();
+    }
+
+    public static String getWebsiteTitle(){
+        return driver.getTitle();
+    }
+
+    public static String getPageSource(){
+        return driver.getPageSource();
     }
 
 }
